@@ -2,7 +2,6 @@ package org.example.demo_travel.travel;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,35 +13,82 @@ public class TravelServiceImpl implements TravelService {
     TravelMapper travelMapper;
 
 
-
-
     @Override
     public int insertOK(TravelVO vo) {
-        return 0;
+        log.info("insertOK()....");
+        log.info(vo.toString());
+
+
+
+        return travelMapper.insertOK(vo);
     }
 
     @Override
     public int updateOK(TravelVO vo) {
-        return 0;
+        log.info("updateOK()....");
+        log.info(vo.toString());
+
+
+
+        return travelMapper.updateOK(vo);
     }
 
     @Override
     public int deleteOK(TravelVO vo) {
-        return 0;
+        log.info("deleteOK()....");
+        log.info(vo.toString());
+        return travelMapper.deleteOK(vo);
     }
 
     @Override
     public TravelVO selectOne(TravelVO vo) {
-        return null;
+        log.info("selectOne()....");
+        log.info(vo.toString());
+        return travelMapper.selectOne(vo);
     }
 
     @Override
     public List<TravelVO> selectAll(int cpage, int limit) {
-        return List.of();
+        log.info("selectAll()....");
+        log.info("cpage: " + cpage);//3
+        log.info("limit: " + limit);//5
+        //cpage,limit를 이용해서 시작행을 구합니다.
+        int startRow = (cpage - 1) * limit;//0,5,10,,,,
+        return travelMapper.selectAll(startRow,limit);
     }
 
     @Override
     public List<TravelVO> searchList(int cpage, int limit, String searchKey, String searchWord) {
-        return List.of();
+        log.info("searchList()....");
+        log.info("cpage: " + cpage);
+        log.info("limit: " + limit);
+        log.info("searchKey: " + searchKey);
+        log.info("searchWord: " + searchWord);
+
+        //cpage,limit를 이용해서 시작행을 구합니다.
+        int startRow = (cpage - 1) * limit;//0,5,10,,,,
+
+        if(searchKey.equals("district")) {
+            return travelMapper.searchListDistrict(startRow,limit,"%"+searchWord+"%");
+        }else{
+            return travelMapper.searchListPhone(startRow,limit,"%"+searchWord+"%");
+        }
     }
+
+    @Override
+    public int getTotalRecords() {
+        return travelMapper.getTotalRecords();
+    }
+
+    @Override
+    public int getSearchDistrictRecords(String searchWord) {
+        return travelMapper.getSearchDistrictRecords("%"+searchWord+"%");
+    }
+
+    @Override
+    public int getSearchPhoneRecords(String searchWord) {
+        return travelMapper.getSearchPhoneRecords("%"+searchWord+"%");
+    }
+
+
 }//end class

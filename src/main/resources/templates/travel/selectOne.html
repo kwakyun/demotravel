@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+</head>
+<body th:replace="~{layout::layout}">
+<div th:fragment="content">
+  <h1>관광명소 상세 페이지</h1>
+  <table id="customers">
+    <thead>
+    <tr>
+      <th>no</th>
+      <th>district</th>
+      <th>title</th>
+      <th>description</th>
+      <th>address</th>
+      <th>phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>[[${vo2.no}]]</td>
+      <td>[[${vo2.district}]]</td>
+      <td>[[${vo2.title}]]</td>
+      <td>[[${vo2.description}]]</td>
+      <td>[[${vo2.address}]]</td>
+      <td>[[${vo2.phone}]]</td>
+    </tr>
+    <tr>
+      <td colspan="2">관광지 이미지</td>
+      <td colspan="4" rowspan="5">
+        <img th:src="|/uploadimgPath/${vo2.imgname}|" width="200" alt="">
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="5">
+        <a th:href="@{/travel/update(no=${vo2.no})}">관광지수정</a>
+        <a th:href="@{/travel/delete(no=${vo2.no})}">관광지삭제</a>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+
+</div>
+</body>
+</html>
